@@ -1,0 +1,27 @@
+plugins {
+	id 'java'
+}
+
+group = 'com.sharetreats'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+	testImplementation 'org.assertj:assertj-core:3.23.1'
+	testImplementation 'junit:junit:4.13.1'
+
+	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testCompileOnly 'org.projectlombok:lombok:1.18.24'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
