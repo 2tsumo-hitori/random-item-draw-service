@@ -1,8 +1,8 @@
 package com.sharetreats.domain.member;
 
-import com.sharetreats.domain.product.Product;
-import com.sharetreats.domain.product.ProductA;
-import org.junit.Test;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItem;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItemGradeA;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,13 +12,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class MemberTest {
 
     private Member member;
-    private Product product;
+    private LuckyBoxItem luckyBoxItem;
     private static int MIN_MONEY = 0;
 
     @BeforeEach
     void setUp() {
         member = Member.create();
-        product = new ProductA("상품A");
+        luckyBoxItem = new LuckyBoxItemGradeA("상품A");
     }
 
     @Test
@@ -34,23 +34,24 @@ class MemberTest {
 
     @Test
     void 상품_저장_성공() {
-        member.saveProduct(product);
-        assertThat(member.getProductList().contains(product));
+        member.saveItem(luckyBoxItem);
+        assertThat(member.getLuckyBoxItems().contains(luckyBoxItem));
     }
 
     @Test
     void 상품_저장_실패__상품이_널() {
-        assertThatThrownBy(() -> member.saveProduct(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> member.saveItem(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 상품_뽑기_성공() {
-        member.drawProduct(5);
-        assertThat(member.getMoney()).isEqualTo(9500);
+        member.spendMoney();
+        assertThat(member.getMoney()).isEqualTo(9900);
     }
 
     @Test
     void 상품_뽑기_실패__금액이_부족() {
-        assertThatThrownBy(() -> member.drawProduct(101)).isInstanceOf(IllegalArgumentException.class);
+        member.setMoney(MIN_MONEY);
+        assertThatThrownBy(() -> member.spendMoney()).isInstanceOf(IllegalArgumentException.class);
     }
 }

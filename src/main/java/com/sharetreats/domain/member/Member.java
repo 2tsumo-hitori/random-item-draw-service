@@ -1,6 +1,6 @@
 package com.sharetreats.domain.member;
 
-import com.sharetreats.domain.product.Product;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItem;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -8,17 +8,18 @@ import java.util.List;
 
 import static com.sharetreats.support.PreConditions.validate;
 import static java.util.Objects.*;
+import static lombok.AccessLevel.*;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 public class Member {
+    @Setter(PROTECTED)
     private int money = INITIAL_MONEY;
 
-    @Setter
-    private int pickCount = INITIAL_PICK_COUNT;
+    private int drawCountOnItemB = INITIAL_DRAW_COUNT_ON_ITEM_B;
 
-    private List<Product> productList = new ArrayList<>();
+    private List<LuckyBoxItem> luckyBoxItems = new ArrayList<>();
 
     private static final int MIN_MONEY = 0;
 
@@ -26,9 +27,9 @@ public class Member {
 
     private static final int DRAW_MONEY = 100;
 
-    private static final int INITIAL_PICK_COUNT = 0;
+    private static final int INITIAL_DRAW_COUNT_ON_ITEM_B = 0;
 
-    private static int MAX_PICK_COUNT = 3;
+    private static final int MAX_DRAW_COUNT_ON_ITEM_B = 3;
 
 
     public void chargeMoney(int money) {
@@ -37,24 +38,28 @@ public class Member {
         this.money += money;
     }
 
-    public void saveProduct(Product product) {
-        validate(nonNull(product), "상품이 없습니다.");
+    public void saveItem(LuckyBoxItem luckyBoxItem) {
+        validate(nonNull(luckyBoxItem), "상품이 없습니다.");
 
-        this.productList.add(product);
+        this.luckyBoxItems.add(luckyBoxItem);
     }
 
-    public void drawProduct(int count) {
-        validate(this.money > count * DRAW_MONEY, "현재 뽑을 수 있을만큼의 금액을 보유하고 있지 않습니다.");
+    public void spendMoney() {
+        validate(this.money >= DRAW_MONEY, "현재 뽑을 수 있을만큼의 금액을 보유하고 있지 않습니다.");
 
-        this.money -= count * DRAW_MONEY;
+        this.money -= DRAW_MONEY;
     }
 
-    public void addPickCount() {
-        this.pickCount++;
+    public void resetDrawCountOnItemB() {
+        this.drawCountOnItemB = INITIAL_DRAW_COUNT_ON_ITEM_B;
     }
 
-    public boolean isMaxPickCount() {
-        return this.pickCount == MAX_PICK_COUNT;
+    public void drawCountOnItemB() {
+        this.drawCountOnItemB++;
+    }
+
+    public boolean isMaxDrawCountOnItemB() {
+        return this.drawCountOnItemB == MAX_DRAW_COUNT_ON_ITEM_B;
     }
 
     public static Member create() {

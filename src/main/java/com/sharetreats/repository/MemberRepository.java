@@ -1,9 +1,12 @@
 package com.sharetreats.repository;
 
 import com.sharetreats.domain.member.Member;
-import com.sharetreats.domain.product.Product;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItem;
 
 public interface MemberRepository {
     Member saveMember();
-    void saveProduct(Member member, Product product);
+    void saveItem(Member member, LuckyBoxItem item);
+    void resetDrawCount(Member member);
+    void spendMoney(Member member);
+    void chargeMoney(Member member, int money);
 }

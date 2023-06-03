@@ -1,4 +1,4 @@
-package com.sharetreats.domain.product;
+package com.sharetreats.domain.luckyboxitem;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +11,13 @@ import static java.util.Objects.*;
 import static lombok.AccessLevel.*;
 
 @Getter
-public abstract class Product {
+public abstract class LuckyBoxItem {
     private String name;
 
     @Setter(PROTECTED)
-    private ProductGrade grade;
+    private LuckyBoxItemGrade grade;
 
+    @Setter(PROTECTED)
     private LocalDateTime expirationDate = LocalDateTime.now()
             .plusDays(RANDOM.nextInt(MAX_EXPIRE_MINUTE) - MIN_EXPIRE_MINUTE);
 
@@ -28,14 +29,18 @@ public abstract class Product {
 
     private static final int MIN_EXPIRE_MINUTE = 10;
 
-    protected Product(String name) {
+    protected LuckyBoxItem(String name) {
         validate(nonNull(name), "제품명이 비어있습니다.");
         validate(!name.isBlank(), "제품명이 비어있습니다.");
 
         this.name = name;
     }
 
-    public boolean drawingPercent() {
-        return RANDOM.nextInt(MAX_PERCENT) < this.grade.percent();
+    public boolean drawLuckyBox() {
+        return RANDOM.nextInt(MAX_PERCENT) < this.grade.percentage();
+    }
+
+    public String prizePrint() {
+        return String.format("%s, %s, %s 을 뽑았습니다.", name, grade, expirationDate.toString());
     }
 }

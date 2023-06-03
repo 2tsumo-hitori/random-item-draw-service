@@ -1,40 +1,51 @@
 package com.sharetreats;
 
-import com.sharetreats.domain.product.Product;
-import com.sharetreats.domain.product.ProductA;
-import com.sharetreats.domain.product.ProductB;
-import com.sharetreats.repository.DefaultMemberRepository;
-import com.sharetreats.repository.DefaultProductRepository;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItem;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItemGradeA;
+import com.sharetreats.domain.luckyboxitem.LuckyBoxItemGradeB;
+import com.sharetreats.repository.MemoryMemberRepository;
+import com.sharetreats.repository.MemoryLuckyBoxItemRepository;
 import com.sharetreats.repository.MemberRepository;
-import com.sharetreats.repository.ProductRepository;
-import com.sharetreats.service.DefaultPachinkoService;
+import com.sharetreats.repository.LuckyBoxItemRepository;
+import com.sharetreats.service.DefaultLuckyBoxService;
+import com.sharetreats.service.LuckyBoxService;
+import lombok.val;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static com.sharetreats.domain.product.ProductGrade.*;
+import static com.sharetreats.domain.luckyboxitem.LuckyBoxItemGrade.*;
 
 public class Config {
     public MemberRepository memberRepository() {
-        return new DefaultMemberRepository();
+        return new MemoryMemberRepository();
     }
 
-    public ProductRepository productRepository() {
-        return new DefaultProductRepository();
+    public LuckyBoxItemRepository luckyBoxItemRepository() {
+        return new MemoryLuckyBoxItemRepository();
     }
 
-    public Config() {
-        DefaultPachinkoService pachinkoService = new DefaultPachinkoService(memberRepository(), productRepository());
+    public LuckyBoxService luckyBoxService() {
+        return new DefaultLuckyBoxService(memberRepository(), luckyBoxItemRepository());
+    }
 
-        List<Product> productListA = new ArrayList<>();
-        List<Product> productListB = new ArrayList<>();
+    private Config() {
+        val luckyBoxItemsGradeA = new ArrayList<LuckyBoxItem>();
+        val luckyBoxItemsGradeB = new ArrayList<LuckyBoxItem>();
+
         for (int i=0; i<10; i++) {
-            productListA.add(new ProductA("A" + i));
+            luckyBoxItemsGradeA.add(new LuckyBoxItemGradeA("A" + i));
         }
         for (int i=0; i<10; i++) {
-            productListB.add(new ProductB("B" + i));
+            luckyBoxItemsGradeB.add(new LuckyBoxItemGradeB("B" + i));
         }
-        productRepository().save(A, productListA);
-        productRepository().save(B, productListB);
+
+        luckyBoxItemRepository().save(A, luckyBoxItemsGradeA);
+        luckyBoxItemRepository().save(B, luckyBoxItemsGradeB);
+    }
+
+    private static Config instance = new Config();
+
+    public static Config getInstance() {
+        return instance;
     }
 }
