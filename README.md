@@ -3,13 +3,14 @@
 ## Subject : 빠칭코 상품 뽑기 서비스
 - Language : Java
 - Runtime Version : Jdk 17.0.6
+- 사용된 의존성 : Lombok, JUnit, assertj
 - [jar 파일 다운로드 링크](https://drive.google.com/file/d/1qRR6yAvtF-43k6C9I0uypSL_0w5KDB1b/view?usp=sharing)
 
-## 패키지 구조 :
+## Application 구조 :
 ![image](https://user-images.githubusercontent.com/96719735/243178749-e5c12b6d-1918-4b74-84ec-e880f15cf414.png)
 
 ## Application 의존 관계 :
-- Main -> Service -> Repository -> Domain
+- RandomBoxDrawApplication -> Service -> Repository -> Domain
 
 ## 테스트 케이스
 ![image](https://user-images.githubusercontent.com/96719735/243178794-347a34fa-636a-4af0-8996-db67da745d9f.png)
@@ -36,7 +37,6 @@
 - Config 클래스에서 DI 직접 구현
    <details>
     <summary>펼치기/접기</summary>
-
   ```Java
   public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
@@ -59,12 +59,17 @@
 - 메서드 체이닝을 활용해 중복 코드 방지
    <details>
     <summary>펼치기/접기</summary>
-
+  
+  적용 전
+  
   ```Java
   val notExpiredItems = luckyBoxDrawSupportService.getNotExpiredItems(startTime);
 
   notExpiredItems = luckyBoxDrawSupportService.sortItems; 
   ```
+  
+  적용 후
+  
   ```Java
   val sortedNotExpiredItems = itemDrawSupportService
                 .notExpiredItems(startTime)
