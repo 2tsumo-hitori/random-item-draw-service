@@ -70,11 +70,8 @@ public class RandomItemDrawSupportService implements ItemDrawSupportService {
 
     @Override
     public void spendMoney(Member member, int count) {
-        if (member.getMoney() >= count * DRAW_MONEY) {
-            memberRepository.spendMoney(member, count);
-        } else {
-            throw new IllegalArgumentException("금액이 부족합니다.");
-        }
+        validate(member.getMoney() >= count * DRAW_MONEY, "금액이 부족합니다.");
+        memberRepository.spendMoney(member, count);
     }
 
     private boolean isItemsCountZero(Map<ItemGrade, List<Item>> items) {

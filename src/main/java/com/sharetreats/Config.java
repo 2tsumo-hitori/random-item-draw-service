@@ -43,12 +43,20 @@ public class Config {
         itemsGradeA.add(new ItemGradeA("JUICE"));
         itemsGradeA.add(new ItemGradeA("CHOCOLATE"));
         itemsGradeA.add(new ItemGradeA("COOKIE"));
+        itemsGradeA.add(new ItemGradeA("SNACK"));
+        itemsGradeA.add(new ItemGradeA("MILK"));
+        itemsGradeA.add(new ItemGradeA("CHEESE"));
+        itemsGradeA.add(new ItemGradeA("BREAD"));
 
         itemsGradeB.add(new ItemGradeB("CHICKEN"));
         itemsGradeB.add(new ItemGradeB("PIZZA"));
         itemsGradeB.add(new ItemGradeB("HAMBURGER"));
         itemsGradeB.add(new ItemGradeB("PASTA"));
         itemsGradeB.add(new ItemGradeB("STEAK"));
+        itemsGradeB.add(new ItemGradeB("SUSHI"));
+        itemsGradeB.add(new ItemGradeB("BARBEQUE"));
+        itemsGradeB.add(new ItemGradeB("CURRY"));
+        itemsGradeB.add(new ItemGradeB("RAMEN"));
 
         itemRepository().save(A, itemsGradeA);
         itemRepository().save(B, itemsGradeB);

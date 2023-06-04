@@ -49,7 +49,7 @@ class MemberTest {
     @Test
     void 상품_뽑기_성공() {
         member.spendMoney(DRAW_COUNT);
-        assertThat(member.getMoney()).isEqualTo(INITIAL_MONEY - DRAW_MONEY);
+        assertThat(member.getMoney()).isEqualTo(INITIAL_MONEY - (DRAW_MONEY * DRAW_COUNT));
     }
 
     @Test
