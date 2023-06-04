@@ -34,6 +34,94 @@
   
 - Lombok 라이브러리의 val 타입을 사용해서 코드 가독성 향상 및 외부 수정에 안전하게 설계
 
+- **탬플릿 콜백 패턴을 활용해 중복 로직 탬플릿화**
+  <details>
+    <summary>적용 전</summary>
+  
+  ```Java
+  public static void main(String[] args) {
+        Config config = Config.getInstance();
+
+        Scanner scanner = new Scanner(System.in);
+
+        MemberRepository memberRepository = config.memberRepository();
+        ItemDrawService itemDrawService = config.itemDrawService();
+
+        Member member = memberRepository.saveMember();
+
+        boolean start = true;
+
+        while(start) {
+            System.out.println("뽑기 1번");
+            System.out.println("금액 충전 2번");
+            System.out.println("프로그램 종료 3번");
+
+            switch (scanner.nextInt()) {
+                case 1 :
+                    try {
+                        System.out.println("뽑기 횟수를 입력해주세요. 현재 잔액은 " + member.getMoney() + "원 입니다.");
+
+                        int count = scanner.nextInt();
+
+                        List<String> resultPrints = itemDrawService.draw(member, count, LocalDateTime.now());
+
+                        resultPrints.forEach(System.out::println);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 2:
+                    try {
+                        System.out.println("충전 할 금액을 입력해주세요.");
+
+                        int chargeMoney = scanner.nextInt();
+
+                        memberRepository.chargeMoney(member, chargeMoney);
+
+                        System.out.println("충전 후 현재 금액은 " + member.getMoney() + "원 입니다.");
+                    } catch(IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 3:
+                    start = false;
+            }
+        }
+    }
+  ```
+  </details>
+  
+  <details>
+    <summary>적용 후</summary>
+  
+  ```Java
+  public static void main(String[] args) {
+		Config config = Config.getInstance();
+
+		Member member = config.memberRepository().saveMember();
+
+		ActionCallback drawAction = new DrawAction(config, member);
+		ActionCallback chargeMoneyAction = new ChargeMoneyAction(config, member);
+
+		while(true) {
+			System.out.println("뽑기 1번");
+			System.out.println("금액 충전 2번");
+			System.out.println("프로그램 종료 3번");
+
+			switch (scanner.nextInt()) {
+				case 1 :
+					execute(drawAction);
+					break;
+				case 2:
+					execute(chargeMoneyAction);
+					break;
+				case 3:
+					return;
+			}
+		}
+	}
+  ```
+    </details>
 - Config 클래스에서 DI 직접 구현
    <details>
     <summary>펼치기/접기</summary>
@@ -166,8 +254,9 @@ public class RandomItemDrawService implements ItemDrawService {
                 .notExpiredItems(startTime)
                 .sortItems();
 
+        itemDrawSupportService.spendMoney(member, count);
+
         for (int i = 0; i < count; i ++) {
-            memberRepository.spendMoney(member);
 
             boolean isDrawSuccess = false;
 
