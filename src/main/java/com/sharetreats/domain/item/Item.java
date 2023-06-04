@@ -36,7 +36,7 @@ public abstract class Item {
         this.name = name;
     }
 
-    public boolean isDrawn() {
+    public boolean isDraw() {
         return RANDOM.nextInt(MAX_PERCENT) < this.grade.percentage();
     }
 

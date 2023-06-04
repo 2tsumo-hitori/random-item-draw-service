@@ -38,8 +38,8 @@ class ItemTest {
     @ParameterizedTest
     @EnumSource(value = ItemGrade.class, names = {"BadItemType"}, mode = EXCLUDE)
     void 제품_가챠_성공() {
-        assertThat(itemGradeA.isDrawn());
-        assertThat(itemGradeB.isDrawn());
+        assertThat(itemGradeA.isDraw());
+        assertThat(itemGradeB.isDraw());
     }
 
     enum ItemGrade {

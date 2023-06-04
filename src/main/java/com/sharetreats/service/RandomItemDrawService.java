@@ -26,16 +26,16 @@ public class RandomItemDrawService implements ItemDrawService {
     public List<String> draw(Member member, int count, LocalDateTime startTime) {
         memberRepository.resetDrawCount(member);
 
-        val drawnResults = new ArrayList<String>();
+        val drawResults = new ArrayList<String>();
 
-        var sortedNotExpiredItems = itemDrawSupportService
+        val sortedNotExpiredItems = itemDrawSupportService
                 .notExpiredItems(startTime)
                 .sortItems();
 
         for (int i = 0; i < count; i ++) {
             memberRepository.spendMoney(member);
 
-            boolean isDrawnSuccess = false;
+            boolean isDrawSuccess = false;
 
             for (ItemGrade grade : ItemGrade.values()) {
                 val items = sortedNotExpiredItems.get(grade);
@@ -43,17 +43,17 @@ public class RandomItemDrawService implements ItemDrawService {
                 val randomItem = items.get(new Random().nextInt(items.size()));
 
                 if (itemDrawSupportService.isDrawSuccess(randomItem, member)) {
-                    drawnResults.add(itemDrawSupportService.acquireItem(member, randomItem));
+                    drawResults.add(itemDrawSupportService.acquireItem(member, randomItem));
 
-                    isDrawnSuccess = true;
+                    isDrawSuccess = true;
 
                     break;
                 }
             }
-            if (!isDrawnSuccess)
-                drawnResults.add(FAILED_DRAW_MESSAGE);
+            if (!isDrawSuccess)
+                drawResults.add(FAILED_DRAW_MESSAGE);
         }
 
-        return drawnResults;
+        return drawResults;
     }
 }

@@ -56,7 +56,7 @@ public class RandomItemDrawSupportService implements ItemDrawSupportService {
             member.draw();
         }
 
-        return randomItem.isDrawn();
+        return randomItem.isDraw();
     }
 
     @Override
