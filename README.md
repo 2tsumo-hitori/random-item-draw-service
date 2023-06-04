@@ -37,6 +37,7 @@
 - Config 클래스에서 DI 직접 구현
    <details>
     <summary>펼치기/접기</summary>
+  
   ```Java
   public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
