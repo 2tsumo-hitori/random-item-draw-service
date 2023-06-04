@@ -7,6 +7,6 @@ public interface MemberRepository {
     Member saveMember();
     void saveItem(Member member, Item item);
     void resetDrawCount(Member member);
-    void spendMoney(Member member);
+    void spendMoney(Member member, int count);
     void chargeMoney(Member member, int money);
 }

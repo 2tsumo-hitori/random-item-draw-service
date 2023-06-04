@@ -1,28 +1,42 @@
 package com.sharetreats.randomboxdrawservice;
 
 import com.sharetreats.Config;
-import com.sharetreats.repository.MemberRepository;
-import com.sharetreats.service.ItemDrawService;
+import com.sharetreats.domain.member.Member;
+import com.sharetreats.randomboxdrawservice.support.ActionCallback;
+import com.sharetreats.randomboxdrawservice.support.ChargeMoneyAction;
+import com.sharetreats.randomboxdrawservice.support.DrawAction;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Scanner;
 
+import static com.sharetreats.randomboxdrawservice.support.Execute.*;
+
 public class RandomBoxDrawServiceApplication {
+	public static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args) {
 		Config config = Config.getInstance();
 
-		Scanner scanner = new Scanner(System.in);
+		Member member = config.memberRepository().saveMember();
 
-		MemberRepository memberRepository = config.memberRepository();
-		ItemDrawService luckyBoxService = config.itemDrawService();
+		ActionCallback drawAction = new DrawAction(config, member);
+		ActionCallback chargeMoneyAction = new ChargeMoneyAction(config, member);
 
-		System.out.println("뽑기를 몇 번 할지 입력해주세요.");
+		while(true) {
+			System.out.println("뽑기 1번");
+			System.out.println("금액 충전 2번");
+			System.out.println("프로그램 종료 3번");
 
-		int count = scanner.nextInt();
-
-		List<String> resultPrints = luckyBoxService.draw(memberRepository.saveMember(), count, LocalDateTime.now());
-
-		resultPrints.forEach(System.out::println);
+			switch (scanner.nextInt()) {
+				case 1 :
+					execute(drawAction);
+					break;
+				case 2:
+					execute(chargeMoneyAction);
+					break;
+				case 3:
+					return;
+			}
+		}
 	}
 }
+
+

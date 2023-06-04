@@ -44,10 +44,10 @@ public class Member {
         this.randomBoxItems.add(randomBoxItem);
     }
 
-    public void spendMoney() {
-        validate(this.money >= DRAW_MONEY, "현재 뽑을 수 있을만큼의 금액을 보유하고 있지 않습니다.");
+    public void spendMoney(int count) {
+        validate(this.money >= (DRAW_MONEY * count), "현재 뽑을 수 있을만큼의 금액을 보유하고 있지 않습니다.");
 
-        this.money -= DRAW_MONEY;
+        this.money -= (DRAW_MONEY * count);
     }
 
     public void resetDrawCountOnItemB() {

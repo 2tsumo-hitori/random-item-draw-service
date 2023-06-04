@@ -16,6 +16,7 @@ class MemberTest {
     private static int MIN_MONEY = 0;
     private static int DRAW_MONEY = 100;
     private static int INITIAL_MONEY = 10000;
+    private static int DRAW_COUNT = 3;
 
     @BeforeEach
     void setUp() {
@@ -47,13 +48,13 @@ class MemberTest {
 
     @Test
     void 상품_뽑기_성공() {
-        member.spendMoney();
+        member.spendMoney(DRAW_COUNT);
         assertThat(member.getMoney()).isEqualTo(INITIAL_MONEY - DRAW_MONEY);
     }
 
     @Test
     void 상품_뽑기_실패__금액이_부족() {
         member.setMoney(MIN_MONEY);
-        assertThatThrownBy(() -> member.spendMoney()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> member.spendMoney(DRAW_COUNT)).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -32,8 +32,9 @@ public class RandomItemDrawService implements ItemDrawService {
                 .notExpiredItems(startTime)
                 .sortItems();
 
+        itemDrawSupportService.spendMoney(member, count);
+
         for (int i = 0; i < count; i ++) {
-            memberRepository.spendMoney(member);
 
             boolean isDrawSuccess = false;
 

@@ -18,4 +18,6 @@ public interface ItemDrawSupportService {
     boolean isDrawSuccess(Item randomItem, Member member);
 
     String acquireItem(Member member, Item randomItem);
+
+    void spendMoney(Member member, int count);
 }

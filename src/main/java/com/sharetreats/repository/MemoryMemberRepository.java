@@ -20,8 +20,8 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public void spendMoney(Member member) {
-        member.spendMoney();
+    public void spendMoney(Member member, int count) {
+        member.spendMoney(count);
     }
 
     @Override

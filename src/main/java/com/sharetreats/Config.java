@@ -38,12 +38,17 @@ public class Config {
         val itemsGradeA = new ArrayList<Item>();
         val itemsGradeB = new ArrayList<Item>();
 
-        for (int i=0; i<10; i++) {
-            itemsGradeA.add(new ItemGradeA("A" + i));
-        }
-        for (int i=0; i<10; i++) {
-            itemsGradeB.add(new ItemGradeB("B" + i));
-        }
+        itemsGradeA.add(new ItemGradeA("CIDER"));
+        itemsGradeA.add(new ItemGradeA("COLA"));
+        itemsGradeA.add(new ItemGradeA("JUICE"));
+        itemsGradeA.add(new ItemGradeA("CHOCOLATE"));
+        itemsGradeA.add(new ItemGradeA("COOKIE"));
+
+        itemsGradeB.add(new ItemGradeB("CHICKEN"));
+        itemsGradeB.add(new ItemGradeB("PIZZA"));
+        itemsGradeB.add(new ItemGradeB("HAMBURGER"));
+        itemsGradeB.add(new ItemGradeB("PASTA"));
+        itemsGradeB.add(new ItemGradeB("STEAK"));
 
         itemRepository().save(A, itemsGradeA);
         itemRepository().save(B, itemsGradeB);

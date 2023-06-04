@@ -23,6 +23,8 @@ public class RandomItemDrawSupportService implements ItemDrawSupportService {
 
     private Map<ItemGrade, List<Item>> notExpiredItems;
     private static final String OUT_OF_STOCK = "상품 재고가 부족해 게임을 종료합니다.";
+    private static final int DRAW_MONEY = 100;
+
 
     @Override
     public Map<ItemGrade, List<Item>> getNotExpiredItems(LocalDateTime startTime) {
@@ -64,6 +66,15 @@ public class RandomItemDrawSupportService implements ItemDrawSupportService {
         memberRepository.saveItem(member, randomItem);
 
         return randomItem.prizePrint();
+    }
+
+    @Override
+    public void spendMoney(Member member, int count) {
+        if (member.getMoney() >= count * DRAW_MONEY) {
+            memberRepository.spendMoney(member, count);
+        } else {
+            throw new IllegalArgumentException("금액이 부족합니다.");
+        }
     }
 
     private boolean isItemsCountZero(Map<ItemGrade, List<Item>> items) {
