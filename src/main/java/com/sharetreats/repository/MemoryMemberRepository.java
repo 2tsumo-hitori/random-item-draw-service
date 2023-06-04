@@ -1,7 +1,7 @@
 package com.sharetreats.repository;
 
 import com.sharetreats.domain.member.Member;
-import com.sharetreats.domain.luckyboxitem.LuckyBoxItem;
+import com.sharetreats.domain.item.Item;
 
 public class MemoryMemberRepository implements MemberRepository {
     @Override
@@ -10,7 +10,7 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public void saveItem(Member member, LuckyBoxItem luckyBoxItem) {
+    public void saveItem(Member member, Item luckyBoxItem) {
         member.saveItem(luckyBoxItem);
     }
 

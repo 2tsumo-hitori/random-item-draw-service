@@ -1,11 +1,11 @@
-package com.sharetreats.domain.luckyboxitem;
+package com.sharetreats.domain.item;
 
-public enum LuckyBoxItemGrade {
+public enum ItemGrade {
     A(90),
     B(10);
 
     protected int percentage;
-    LuckyBoxItemGrade(int percentage) {
+    ItemGrade(int percentage) {
         this.percentage = percentage;
     }
     public int percentage() {

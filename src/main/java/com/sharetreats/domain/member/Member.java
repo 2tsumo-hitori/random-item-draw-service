@@ -1,6 +1,6 @@
 package com.sharetreats.domain.member;
 
-import com.sharetreats.domain.luckyboxitem.LuckyBoxItem;
+import com.sharetreats.domain.item.Item;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ public class Member {
     @Setter(PROTECTED)
     private int money = INITIAL_MONEY;
 
-    private int drawCountOnItemB = INITIAL_DRAW_COUNT_ON_ITEM_B;
+    private int drawCountOnItemGradeB = INITIAL_DRAW_COUNT_ON_ITEM_GRADE_B;
 
-    private List<LuckyBoxItem> luckyBoxItems = new ArrayList<>();
+    private List<Item> randomBoxItems = new ArrayList<>();
 
     private static final int MIN_MONEY = 0;
 
@@ -27,9 +27,9 @@ public class Member {
 
     private static final int DRAW_MONEY = 100;
 
-    private static final int INITIAL_DRAW_COUNT_ON_ITEM_B = 0;
+    private static final int INITIAL_DRAW_COUNT_ON_ITEM_GRADE_B = 0;
 
-    private static final int MAX_DRAW_COUNT_ON_ITEM_B = 3;
+    private static final int MAX_DRAW_COUNT_ON_ITEM_GRADE_B = 3;
 
 
     public void chargeMoney(int money) {
@@ -38,10 +38,10 @@ public class Member {
         this.money += money;
     }
 
-    public void saveItem(LuckyBoxItem luckyBoxItem) {
-        validate(nonNull(luckyBoxItem), "상품이 없습니다.");
+    public void saveItem(Item randomBoxItem) {
+        validate(nonNull(randomBoxItem), "상품이 없습니다.");
 
-        this.luckyBoxItems.add(luckyBoxItem);
+        this.randomBoxItems.add(randomBoxItem);
     }
 
     public void spendMoney() {
@@ -51,15 +51,15 @@ public class Member {
     }
 
     public void resetDrawCountOnItemB() {
-        this.drawCountOnItemB = INITIAL_DRAW_COUNT_ON_ITEM_B;
+        this.drawCountOnItemGradeB = INITIAL_DRAW_COUNT_ON_ITEM_GRADE_B;
     }
 
-    public void drawCountOnItemB() {
-        this.drawCountOnItemB++;
+    public void draw() {
+        this.drawCountOnItemGradeB++;
     }
 
     public boolean isMaxDrawCountOnItemB() {
-        return this.drawCountOnItemB == MAX_DRAW_COUNT_ON_ITEM_B;
+        return this.drawCountOnItemGradeB == MAX_DRAW_COUNT_ON_ITEM_GRADE_B;
     }
 
     public static Member create() {
