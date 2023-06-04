@@ -6,17 +6,17 @@
 - [jar 파일 다운로드 링크](https://drive.google.com/file/d/1qRR6yAvtF-43k6C9I0uypSL_0w5KDB1b/view?usp=sharing)
 
 ## 패키지 구조 :
-![image](https://github.com/2tsumo-hitori/random-item-draw-service/assets/96719735/72d6e90d-e221-4eac-9e8b-1fd61f47efce)
+![image](https://user-images.githubusercontent.com/96719735/243178749-e5c12b6d-1918-4b74-84ec-e880f15cf414.png)
 
 ## Application 의존 관계 :
 - Main -> Service -> Repository -> Domain
 
 ## 테스트 케이스
-![image](https://github.com/2tsumo-hitori/random-item-draw-service/assets/96719735/3fc63a09-20b7-4dfe-822d-dd0b1819fb37)
+![image](https://user-images.githubusercontent.com/96719735/243178794-347a34fa-636a-4af0-8996-db67da745d9f.png)
 
 - 계층 별로 테스트 케이스 작성, 총 24개의 테스트 케이스
 
-![image](https://github.com/2tsumo-hitori/random-item-draw-service/assets/96719735/df69977a-b4da-4d9d-8a06-b52ead21fee8)
+![image](https://user-images.githubusercontent.com/96719735/243178815-61639521-ae66-4579-a976-a26524a0ad32.png)
 
 - 철저한 사전검증으로 프로그램 오류 발생 방지
 
@@ -191,7 +191,7 @@ public class RandomItemDrawService implements ItemDrawService {
 - 회원의 DrawCount를 초기값으로 변경
 - 유통기한이 지난 상품을 필터링한 후에 TreeMap 자료구조를 사용해 정렬함.
 - 이후 회원이 기입한 count 횟수만큼 반복
-- flag 변수를 사용해 A, B 상품 중 하나라도 뽑혔다면 변수 값을 true로 변경 후 break. 하나도 뽑히지 못했다면 꽝 메세지를 List에 추가
 - A, B 순서대로 반복, 저장되어있는 상품 중 랜덤한 상품을 뽑음
+- flag 변수를 사용해 A, B 상품 중 하나라도 뽑혔다면 변수 값을 true로 변경 후 break. 하나도 뽑히지 못했다면 꽝 메세지를 List에 추가
 - 뽑기 후 결과 반환, 결과를 List에 추가
 - 뽑기결과 문자열이 저장된 List 반환
