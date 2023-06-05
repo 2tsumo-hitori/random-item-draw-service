@@ -19,14 +19,11 @@ public class Execute {
     public static Boolean programExecution(ActionCallback... callbacks) {
         try {
             switch (scanner.next()) {
-                case "1" :
-                    execute(callbacks[0]);
-                    break;
-                case "2":
-                    execute(callbacks[1]);
-                    break;
-                case "3":
+                case "1" -> execute(callbacks[0]);
+                case "2" -> execute(callbacks[1]);
+                case "3" -> {
                     return false;
+                }
             }
         } catch(NumberFormatException e) {
             System.out.println("숫자를 입력해주세요.");
