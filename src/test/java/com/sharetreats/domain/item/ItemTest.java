@@ -37,7 +37,7 @@ class ItemTest {
 
     @ParameterizedTest
     @EnumSource(value = ItemGrade.class, names = {"BadItemType"}, mode = EXCLUDE)
-    void 제품_가챠_성공() {
+    void 제품_뽑기_성공() {
         assertThat(itemGradeA.isDraw());
         assertThat(itemGradeB.isDraw());
     }

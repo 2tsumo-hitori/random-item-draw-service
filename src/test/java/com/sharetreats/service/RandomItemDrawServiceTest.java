@@ -68,7 +68,7 @@ class RandomItemDrawServiceTest {
     }
 
     @Test
-    void 럭키박스_뽑기_성공() {
+    void 상품_뽑기_성공() {
         val successOrFailureMessageBox = itemDrawService.draw(member, SUCCESS_DRAW_COUNT, LocalDateTime.now());
 
         assertThat(successOrFailureMessageBox.size()).isEqualTo(SUCCESS_DRAW_COUNT);
@@ -76,7 +76,7 @@ class RandomItemDrawServiceTest {
     }
 
     @Test
-    void 럭키박스_뽑기_실패__소지금액이_게임에_필요한_금액보다_더_적음() {
+    void 상품_뽑기_실패__소지금액이_게임에_필요한_금액보다_더_적음() {
         assertThat(member.getMoney()).isEqualTo(INITIAL_MONEY);
 
         assertThatThrownBy(() -> itemDrawService.draw(member, FAILURE_DRAW_COUNT, LocalDateTime.now()))
@@ -84,7 +84,7 @@ class RandomItemDrawServiceTest {
     }
 
     @Test
-    void 럭키박스_뽑기_실패__모든_상품의_유통기한이_지남() {
+    void 상품_뽑기_실패__모든_상품의_유통기한이_지남() {
         MemoryItemRepository.clear();
 
         val luckyBoxItemsGradeA = new ArrayList<Item>();
