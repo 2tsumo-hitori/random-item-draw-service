@@ -148,7 +148,7 @@
     </details>	
 	   
 		
-- Config 클래스에서 DI 직접 구현
+- DIContainer 클래스에서 의존성 주입, 의존성 주입 컨테이너 직접 구현
    <details>
     <summary>펼치기/접기</summary>
   
