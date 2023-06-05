@@ -17,7 +17,7 @@
 
 - 계층 별로 테스트 케이스 작성, 총 24개의 테스트 케이스
 
-![image](https://user-images.githubusercontent.com/96719735/243178815-61639521-ae66-4579-a976-a26524a0ad32.png)
+![image](https://github.com/2tsumo-hitori/random-item-draw-service/assets/96719735/a5509d13-f8d3-4d92-8075-06f2e8be5a58)
 
 - 철저한 사전검증으로 프로그램 오류 발생 방지
 
@@ -39,55 +39,45 @@
     <summary>적용 전</summary>
   
   ```Java
-  public static void main(String[] args) {
-        Config config = Config.getInstance();
 
-        Scanner scanner = new Scanner(System.in);
 
-        MemberRepository memberRepository = config.memberRepository();
-        ItemDrawService itemDrawService = config.itemDrawService();
+	while(start) {
+		System.out.println("뽑기 1번");
+		System.out.println("금액 충전 2번");
+		System.out.println("프로그램 종료 3번");
 
-        Member member = memberRepository.saveMember();
+		switch (scanner.nextInt()) {
+			case 1 :
+				try {
+					System.out.println("뽑기 횟수를 입력해주세요. 현재 잔액은 " + member.getMoney() + "원 입니다.");
 
-        boolean start = true;
+					int count = scanner.nextInt();
 
-        while(start) {
-            System.out.println("뽑기 1번");
-            System.out.println("금액 충전 2번");
-            System.out.println("프로그램 종료 3번");
+					List<String> resultPrints = itemDrawService.draw(member, count, LocalDateTime.now());
 
-            switch (scanner.nextInt()) {
-                case 1 :
-                    try {
-                        System.out.println("뽑기 횟수를 입력해주세요. 현재 잔액은 " + member.getMoney() + "원 입니다.");
+					resultPrints.forEach(System.out::println);
+				} catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			case 2:
+				try {
+					System.out.println("충전 할 금액을 입력해주세요.");
 
-                        int count = scanner.nextInt();
+					int chargeMoney = scanner.nextInt();
 
-                        List<String> resultPrints = itemDrawService.draw(member, count, LocalDateTime.now());
+					memberRepository.chargeMoney(member, chargeMoney);
 
-                        resultPrints.forEach(System.out::println);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 2:
-                    try {
-                        System.out.println("충전 할 금액을 입력해주세요.");
-
-                        int chargeMoney = scanner.nextInt();
-
-                        memberRepository.chargeMoney(member, chargeMoney);
-
-                        System.out.println("충전 후 현재 금액은 " + member.getMoney() + "원 입니다.");
-                    } catch(IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 3:
-                    start = false;
-            }
-        }
-    }
+					System.out.println("충전 후 현재 금액은 " + member.getMoney() + "원 입니다.");
+				} catch(IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			case 3:
+				start = false;
+		}
+	}
+    
   ```
   </details>
   
@@ -95,33 +85,69 @@
     <summary>적용 후</summary>
   
   ```Java
-  public static void main(String[] args) {
-		Config config = Config.getInstance();
 
-		Member member = config.memberRepository().saveMember();
+	while(true) {
+		System.out.println("뽑기 1번");
+		System.out.println("금액 충전 2번");
+		System.out.println("프로그램 종료 3번");
 
-		ActionCallback drawAction = new DrawAction(config, member);
-		ActionCallback chargeMoneyAction = new ChargeMoneyAction(config, member);
-
-		while(true) {
-			System.out.println("뽑기 1번");
-			System.out.println("금액 충전 2번");
-			System.out.println("프로그램 종료 3번");
-
-			switch (scanner.nextInt()) {
-				case 1 :
-					execute(drawAction);
-					break;
-				case 2:
-					execute(chargeMoneyAction);
-					break;
-				case 3:
-					return;
-			}
+		switch (scanner.nextInt()) {
+			case 1 :
+				execute(drawAction);
+				break;
+			case 2:
+				execute(chargeMoneyAction);
+				break;
+			case 3:
+				return;
 		}
 	}
+	
   ```
     </details>
+	
+   <details>
+    <summary>2차 적용 전</summary>
+  
+  ```Java
+   while (true) {
+	    System.out.println("뽑기 1번");
+	    System.out.println("금액 충전 2번");
+	    System.out.println("프로그램 종료 3번");
+
+	    try {
+		switch (scanner.next()) {
+		    case "1":
+			execute(drawAction);
+			break;
+		    case "2":
+			execute(chargeMoneyAction);
+			break;
+		    case "3":
+			return;
+		}
+	    } catch (NumberFormatException e) {
+		System.out.println("숫자를 입력해주세요.");
+	    }
+	}
+   ```
+	</details>
+	
+   <details>
+    <summary>2차 적용 후</summary>
+  
+  ```Java
+   while (start) {
+		System.out.println("뽑기 1번");
+		System.out.println("금액 충전 2번");
+		System.out.println("프로그램 종료 3번");
+
+		start = programExecution(drawAction, chargeMoneyAction);
+	}
+  	 ```
+    </details>	
+	   
+		
 - Config 클래스에서 DI 직접 구현
    <details>
     <summary>펼치기/접기</summary>
