@@ -11,6 +11,7 @@ import static com.sharetreats.randomboxdrawservice.RandomBoxDrawServiceApplicati
 public class ChargeMoneyAction implements ActionCallback {
     private final Config config;
     private final Member member;
+
     @Override
     public void execute() {
         System.out.println("충전 할 금액을 입력해주세요.");
