@@ -1,7 +1,7 @@
 package com.sharetreats.randomboxdrawservice.support;
 
-import com.sharetreats.Config;
 import com.sharetreats.domain.member.Member;
+import com.sharetreats.service.ItemDrawService;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import static com.sharetreats.randomboxdrawservice.RandomBoxDrawServiceApplicati
 
 @RequiredArgsConstructor
 public class DrawAction implements ActionCallback {
-    private final Config config;
+    private final ItemDrawService itemDrawService;
     private final Member member;
 
     @Override
@@ -20,7 +20,7 @@ public class DrawAction implements ActionCallback {
 
         int count = scanner.nextInt();
 
-        List<String> resultPrints = config.itemDrawService().draw(member, count, LocalDateTime.now());
+        List<String> resultPrints = itemDrawService.draw(member, count, LocalDateTime.now());
 
         resultPrints.forEach(System.out::println);
     }

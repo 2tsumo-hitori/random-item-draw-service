@@ -17,24 +17,30 @@ import java.util.ArrayList;
 
 import static com.sharetreats.domain.item.ItemGrade.*;
 
-public class Config {
-    public MemberRepository memberRepository() {
+public class DIContainer {
+    private static DIContainer instance = new DIContainer();
+    private static MemberRepository memberRepositoryInstance = memberRepository();
+    private static ItemRepository itemRepositoryInstance = itemRepository();
+    private static ItemDrawService itemDrawServiceInstance = itemDrawService();
+    private static ItemDrawSupportService itemDrawSupportService = itemDrawSupportService();
+
+    private static MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
-    public ItemRepository itemRepository() {
+    private static ItemRepository itemRepository() {
         return new MemoryItemRepository();
     }
 
-    public ItemDrawSupportService itemDrawSupportService() {
+    private static ItemDrawSupportService itemDrawSupportService() {
         return new RandomItemDrawSupportService(memberRepository(), itemRepository());
     }
 
-    public ItemDrawService itemDrawService() {
+    private static ItemDrawService itemDrawService() {
         return new RandomItemDrawService(memberRepository(), itemDrawSupportService());
     }
 
-    private Config() {
+    private DIContainer() {
         val itemsGradeA = new ArrayList<Item>();
         val itemsGradeB = new ArrayList<Item>();
 
@@ -62,9 +68,16 @@ public class Config {
         itemRepository().save(B, itemsGradeB);
     }
 
-    private static Config instance = new Config();
-
-    public static Config getInstance() {
-        return instance;
+    public static MemberRepository getMemberRepository() {
+        return memberRepositoryInstance;
+    }
+    public static ItemRepository getItemRepository() {
+        return itemRepositoryInstance;
+    }
+    public static ItemDrawService getItemDrawService() {
+        return itemDrawServiceInstance;
+    }
+    public static ItemDrawSupportService getItemDrawSupportService() {
+        return itemDrawSupportService;
     }
 }

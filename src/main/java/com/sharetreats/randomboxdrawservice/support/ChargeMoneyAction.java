@@ -1,15 +1,14 @@
 package com.sharetreats.randomboxdrawservice.support;
 
-import com.sharetreats.Config;
 import com.sharetreats.domain.member.Member;
+import com.sharetreats.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-
 
 import static com.sharetreats.randomboxdrawservice.RandomBoxDrawServiceApplication.scanner;
 
 @RequiredArgsConstructor
 public class ChargeMoneyAction implements ActionCallback {
-    private final Config config;
+    private final MemberRepository memberRepository;
     private final Member member;
 
     @Override
@@ -18,7 +17,7 @@ public class ChargeMoneyAction implements ActionCallback {
 
         int chargeMoney = scanner.nextInt();
 
-        config.memberRepository().chargeMoney(member, chargeMoney);
+        memberRepository.chargeMoney(member, chargeMoney);
 
         System.out.println("충전 후 현재 금액은 " + member.getMoney() + "원 입니다.");
     }
