@@ -15,7 +15,7 @@ public class ChargeMoneyAction implements ActionCallback {
     public void execute() {
         System.out.println("충전 할 금액을 입력해주세요.");
 
-        int chargeMoney = scanner.nextInt();
+        int chargeMoney = Integer.parseInt(scanner.next());
 
         memberRepository.chargeMoney(member, chargeMoney);
 

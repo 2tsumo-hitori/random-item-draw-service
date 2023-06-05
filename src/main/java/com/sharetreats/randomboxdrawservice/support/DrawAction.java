@@ -18,7 +18,7 @@ public class DrawAction implements ActionCallback {
     public void execute() {
         System.out.println("뽑기 횟수를 입력해주세요. 현재 잔액은 " + member.getMoney() + "원 입니다.");
 
-        int count = scanner.nextInt();
+        int count = Integer.parseInt(scanner.next());
 
         List<String> resultPrints = itemDrawService.draw(member, count, LocalDateTime.now());
 

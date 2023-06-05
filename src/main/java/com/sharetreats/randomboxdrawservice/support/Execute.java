@@ -9,10 +9,10 @@ public class Execute {
     public static void execute(ActionCallback callback) {
         try {
             callback.execute();
-        } catch(IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        } catch (InputMismatchException e) {
+        } catch(InputMismatchException | NumberFormatException e) {
             System.out.println("숫자를 입력해주세요.");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
